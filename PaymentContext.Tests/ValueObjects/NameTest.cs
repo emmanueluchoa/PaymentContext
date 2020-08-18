@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using PaymentContext.Domain.ValueObjects;
 
-namespace PaymentContext.Tests
+namespace PaymentContext.Tests.ValueObjects
 {
     public class NameTest
     {

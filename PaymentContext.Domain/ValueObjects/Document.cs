@@ -16,22 +16,36 @@ namespace PaymentContext.Domain.ValueObjects
         }
         public override void Validate()
         {
-            ValidateNumber();
             ValidateDocumentType();
+            ValidateNumber();
+            ValidateNumberByDocumentType();
         }
+
         public void ValidateNumber()
         {
             RuleFor(document => document.Number)
                 .NotEmpty()
-                .WithMessage("Document number not provided.")
-                .When(document => document.Type == EDocumentType.CNPJ).Length(14)
-                .When(document => document.Type == EDocumentType.CPF).Length(11);
+                .WithMessage("Document number not provided.");
+        }
+
+        public void ValidateNumberByDocumentType()
+        {
+            When(document => document.Type != EDocumentType.NotProvided, () =>
+            {
+                When(cnpjDocument => cnpjDocument.Type == EDocumentType.CNPJ, () =>
+                {
+                    RuleFor(doc => doc.Number)
+                    .Length(14).WithMessage("CNPJ must have 14 characters.");
+                }).Otherwise(() =>
+                {
+                    RuleFor(doc => doc.Number)
+                    .Length(11).WithMessage("CPF must have 11 characters.");
+                });
+            });
         }
         public void ValidateDocumentType()
         {
             RuleFor(document => document.Type)
-                .NotEmpty()
-                .WithMessage("Document type not provided.")
                 .NotEqual(EDocumentType.NotProvided)
                 .WithMessage("Document type not provided.");
         }

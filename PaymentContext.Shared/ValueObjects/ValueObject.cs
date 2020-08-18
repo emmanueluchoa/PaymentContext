@@ -19,7 +19,7 @@ namespace PaymentContext.Shared.ValueObjects
         {
             string errorMessage = string.Empty;
             if (this._validationResult.Errors.Any())
-                errorMessage = string.Join(", ", this._validationResult.Errors.Select(error => $"{error.PropertyName} : {error.ErrorMessage}"));
+                errorMessage = string.Join(", ", this._validationResult.Errors.Select(error => $"{error.PropertyName}: {error.ErrorMessage}"));
 
             return errorMessage;
         }
