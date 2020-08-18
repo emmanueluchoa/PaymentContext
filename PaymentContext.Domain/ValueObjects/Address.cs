@@ -23,11 +23,11 @@ namespace PaymentContext.Domain.ValueObjects
             Country = country;
             ZipCode = zipCode;
         }
-        public override void Validate() {
+        public override void Validate()
+        {
             ValidateCity();
             ValidateState();
             ValidateState();
-            ValidateNumber();
             ValidateStreet();
             ValidateZipCode();
             ValidateCountry();
@@ -36,37 +36,35 @@ namespace PaymentContext.Domain.ValueObjects
         void ValidateCountry()
         {
             RuleFor(address => address.Country)
-                .NotEmpty().WithMessage("Country not provided.;");
+                .NotEmpty().WithMessage("Country not provided.")
+                .MinimumLength(3).WithMessage("Country must be at least 3 characters.")
+                .MaximumLength(4).WithMessage("Country must have a maximum of 4 characters.");
         }
         void ValidateZipCode()
         {
             RuleFor(address => address.ZipCode)
-                .NotEmpty().WithMessage("Zip code not provided.;");
+                .NotEmpty().WithMessage("Zip code not provided.");
         }
         void ValidateState()
         {
             RuleFor(address => address.State)
-                .NotEmpty().WithMessage("State not provided.;");
+                .NotEmpty().WithMessage("State not provided.");
         }
         void ValidateCity()
         {
             RuleFor(address => address.City)
-                .NotEmpty().WithMessage("City not provided.;");
+                .NotEmpty().WithMessage("City not provided.");
         }
         void ValidateNeighborhood()
         {
             RuleFor(address => address.Neighborhood)
-                .NotEmpty().WithMessage("Neighborhood not provided.;");
+                .NotEmpty().WithMessage("Neighborhood not provided.");
         }
-        void ValidateNumber()
-        {
-            RuleFor(address => address.Number)
-                .NotEmpty().WithMessage("Number not provided.;");
-        }
+
         void ValidateStreet()
         {
             RuleFor(address => address.Street)
-                .NotEmpty().WithMessage("Street not provided.;");
+                .NotEmpty().WithMessage("Street not provided.");
         }
     }
 }
