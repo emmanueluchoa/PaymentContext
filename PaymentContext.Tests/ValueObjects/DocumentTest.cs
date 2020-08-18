@@ -32,7 +32,7 @@ namespace PaymentContext.Tests.ValueObjects
         public void DocumentTypeMustBeCPF()
         {
             Document document = new Document("19899462080", EDocumentType.CPF);
-            Assert.IsTrue(document.Type == EDocumentType.CPF);
+            Assert.AreEqual(EDocumentType.CPF, document.Type);
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace PaymentContext.Tests.ValueObjects
         public void DocumentTypeMustByCNPJ()
         {
             Document document = new Document("84131285000190", EDocumentType.CNPJ);
-            Assert.IsTrue(document.Type == EDocumentType.CNPJ);
+            Assert.AreEqual(EDocumentType.CNPJ, document.Type);
         }
 
         [Test]

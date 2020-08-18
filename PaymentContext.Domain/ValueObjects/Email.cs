@@ -23,15 +23,13 @@ namespace PaymentContext.Domain.ValueObjects
         {
             RuleFor(email => email.Address)
                 .NotEmpty()
-                .WithMessage("Email not provided.")
+                .WithMessage("Address not provided.")
                 .EmailAddress()
                 .WithMessage("Invalid email.");
         }
         private void ValidateEmailType()
         {
             RuleFor(email => email.Type)
-                .NotNull()
-                .WithMessage("Email type not provided.")
                 .NotEqual(EEmailType.NotProvided)
                 .WithMessage("Email type not provided.");
         }
