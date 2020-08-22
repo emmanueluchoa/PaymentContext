@@ -1,15 +1,14 @@
-﻿using PaymentContext.Domain.ValueObjects;
+﻿using FluentValidation;
+using PaymentContext.Domain.ValueObjects;
 using PaymentContext.Shared.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PaymentContext.Domain.Entities
 {
     public abstract class Payment : Entity<Payment>
     {
         protected Payment(DateTime paidDate, DateTime expireDate, decimal total,
-        decimal totalPaid, Address address, string payer, Document document)
+        decimal totalPaid, Address address, string payer, Document document) : base()
         {
             this.Number = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 10).ToUpper();
             PaidDate = paidDate;

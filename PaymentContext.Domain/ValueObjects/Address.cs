@@ -23,7 +23,9 @@ namespace PaymentContext.Domain.ValueObjects
             Country = country;
             ZipCode = zipCode;
         }
-        public override void Validate() {
+
+        public override void Validate()
+        {
             ValidateCity();
             ValidateState();
             ValidateState();

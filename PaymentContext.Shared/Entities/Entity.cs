@@ -20,12 +20,7 @@ namespace PaymentContext.Shared.Entities
 
             this.Validate();
         }
-        public bool IsValid()
-        {
-            this._validationResult = Validate(this as T);
-            return this._validationResult.IsValid;
-        }
-        public abstract void Validate();
+
         public string GetEntityErrors()
         {
             string errorMessage = string.Empty;
@@ -34,5 +29,13 @@ namespace PaymentContext.Shared.Entities
 
             return errorMessage;
         }
+
+        public bool IsValid()
+        {
+            this._validationResult = Validate(this as T);
+            return this._validationResult.IsValid;
+        }
+
+        public abstract void Validate();
     }
 }

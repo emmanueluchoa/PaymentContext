@@ -20,8 +20,7 @@ namespace PaymentContext.Domain.Entities
             this.Name = name;
             this.Document = document;
             this.Email = email;
-            Document = document;
-            Address = address;
+            this.Address = address;
 
             if (this._subscriptions == null)
                 this._subscriptions = new List<Subscription>();
