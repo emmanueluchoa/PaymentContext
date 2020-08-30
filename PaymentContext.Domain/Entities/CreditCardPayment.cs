@@ -11,22 +11,21 @@ namespace PaymentContext.Domain.Entities
             decimal totalPaid,
             Address address,
             string payer,
-            Document document) : base(paidDate,
+            Document document, string cardHolderName, string cardNumber, string lastTransactionNumber) : base(paidDate,
                 expireDate,
                 total,
                 totalPaid,
                 address,
                 payer,
                 document)
-        { }
+        {
+            this.CardHolderName = cardHolderName;
+            this.CardNumber = cardNumber;
+            this.LastTransactionNumber = lastTransactionNumber;
+        }
 
         public string CardHolderName { get; private set; }
         public string CardNumber { get; private set; }
         public string LastTransactionNumber { get; private set; }
-
-        public override void Validate()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -8,4 +8,8 @@
     <ProjectReference Include="..\PaymentContext.Shared\PaymentContext.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
 </Project>

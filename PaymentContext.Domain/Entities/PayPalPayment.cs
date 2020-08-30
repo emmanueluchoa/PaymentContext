@@ -1,4 +1,5 @@
-﻿using PaymentContext.Domain.ValueObjects;
+﻿using PaymentContext.Domain.Validator;
+using PaymentContext.Domain.ValueObjects;
 using System;
 
 namespace PaymentContext.Domain.Entities
@@ -16,15 +17,5 @@ namespace PaymentContext.Domain.Entities
 
         public Email Email { get; private set; }
         public string TransactionCode { get; private set; }
-
-        //public override bool IsValid()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public override void Validate()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
