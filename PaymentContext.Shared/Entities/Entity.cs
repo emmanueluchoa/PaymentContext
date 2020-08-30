@@ -1,12 +1,10 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using PaymentContext.Shared.Interfaces;
+﻿using FluentValidation.Results;
 using System;
 using System.Linq;
 
 namespace PaymentContext.Shared.Entities
 {
-    public abstract class Entity<T> : AbstractValidator<T>, IValidateEntity<T> where T : class
+    public abstract class Entity<T> where T : class
     {
         public Guid Id { get; private set; }
         private ValidationResult _validationResult { get; set; }
@@ -17,25 +15,21 @@ namespace PaymentContext.Shared.Entities
 
             if (null == this._validationResult)
                 this._validationResult = new ValidationResult();
-
-            this.Validate();
         }
 
-        public string GetEntityErrors()
+        public string GetValidationErrors()
         {
             string errorMessage = string.Empty;
             if (this._validationResult.Errors.Any())
-                errorMessage = string.Join(", ", this._validationResult.Errors.Select(error => $"{error.PropertyName} : {error.ErrorMessage}"));
+                errorMessage = string.Join(", ", this._validationResult.Errors.Select(error => $"{error.PropertyName}: {error.ErrorMessage}"));
 
             return errorMessage;
         }
 
-        public bool IsValid()
-        {
-            this._validationResult = Validate(this as T);
-            return this._validationResult.IsValid;
-        }
+        public bool IsValid() =>
+            this._validationResult.IsValid;
 
-        public abstract void Validate();
+        public void SetValidationResult(ValidationResult result) =>
+            this._validationResult = result;
     }
 }

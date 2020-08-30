@@ -2,20 +2,24 @@
 using PaymentContext.Domain.Entities;
 using PaymentContext.Domain.ValueObjects;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PaymentContext.Domain.Validator
 {
-    public class PaymentValidator : Payment
+    /// <summary>
+    /// Classe que implementa classe abstrata Payment apenas para execução de testes.
+    /// </summary>
+    public class PaymentTestImplementation : Payment
     {
-        public PaymentValidator(DateTime paidDate, DateTime expireDate, decimal total, decimal totalPaid, Address address, string payer, Document document)
-            : base(paidDate, expireDate, total, totalPaid, address, payer, document) { }
+        public PaymentTestImplementation(DateTime paidDate, DateTime expireDate, decimal total, decimal totalPaid, Address address, string payer, Document document) : base(paidDate, expireDate, total, totalPaid, address, payer, document) { }
+    }
 
-        public override void Validate()
+    public class PaymentValidator : AbstractValidator<Payment>
+    {
+        public PaymentValidator()
         {
             ValidatePayer();
             ValidateTotal();
+            ValidateAddress();
             ValidatePaidDate();
             ValidateDocument();
             ValidateTotalPaid();
@@ -52,14 +56,21 @@ namespace PaymentContext.Domain.Validator
         private void ValidateExpireDate()
         {
             RuleFor(payment => payment.ExpireDate)
-                .NotEmpty().WithMessage("Expire date not provided");
+                .NotEmpty().WithMessage("Expire date not provided.");
         }
 
         private void ValidateDocument()
         {
             RuleFor(payment => payment.Document)
                 .NotEmpty().WithMessage("Document not provided.")
-                .SetValidator(new Document(string.Empty));
+                .SetValidator(new DocumentValidator());
+        }
+
+        private void ValidateAddress()
+        {
+            RuleFor(payment => payment.Address)
+                .NotEmpty().WithMessage("Address not provided.")
+                .SetValidator(new AddressValidator());
         }
     }
 }

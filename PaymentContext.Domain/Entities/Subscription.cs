@@ -34,10 +34,5 @@ namespace PaymentContext.Domain.Entities
             this.Active = isActive;
             LastUptadeDate = DateTime.Now;
         }
-
-        public override void Validate()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

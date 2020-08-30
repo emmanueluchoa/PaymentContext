@@ -1,21 +1,18 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using PaymentContext.Shared.Interfaces;
+﻿using FluentValidation.Results;
 using System.Linq;
 
 namespace PaymentContext.Shared.ValueObjects
 {
-    public abstract class ValueObject<T> : AbstractValidator<T>, IValidateValueObject<T> where T : class
+    public abstract class ValueObject<T> where T : class
     {
         protected ValidationResult _validationResult { get; set; }
         public ValueObject()
         {
             if (null == this._validationResult)
                 this._validationResult = new ValidationResult();
-
-            this.Validate();
         }
-        public string GetEntityErrors()
+
+        public string GetErrors()
         {
             string errorMessage = string.Empty;
             if (this._validationResult.Errors.Any())
@@ -23,11 +20,11 @@ namespace PaymentContext.Shared.ValueObjects
 
             return errorMessage;
         }
-        public abstract void Validate();
-        public bool IsValid()
-        {
-            this._validationResult = Validate(this as T);
-            return this._validationResult.IsValid;
-        }
+
+        public bool IsValid() =>
+             this._validationResult.IsValid;
+
+        public void SetValidationResult(ValidationResult result) =>
+            this._validationResult = result;
     }
 }

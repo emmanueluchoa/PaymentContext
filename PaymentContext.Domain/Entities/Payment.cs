@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using PaymentContext.Domain.ValueObjects;
+﻿using PaymentContext.Domain.ValueObjects;
 using PaymentContext.Shared.Entities;
 using System;
 

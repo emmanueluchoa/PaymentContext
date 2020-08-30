@@ -1,31 +1,38 @@
 ﻿using FluentValidation;
 using NUnit.Framework;
 using PaymentContext.Domain.Enums;
+using PaymentContext.Domain.Validator;
 using PaymentContext.Domain.ValueObjects;
 
 namespace PaymentContext.Tests.ValueObjects
 {
     public class DocumentTest
     {
+        private DocumentValidator _validator;
+
         [SetUp]
-        public void Setup() { }
+        public void Setup() =>
+            this._validator = new DocumentValidator();
 
         [Test]
         public void DocumentNumberNotProvided()
         {
             Document document = new Document(string.Empty, EDocumentType.CNPJ);
-            document.CascadeMode = CascadeMode.Stop;
-            document.IsValid();
-            Assert.AreEqual("Number: Document number not provided.", document.GetEntityErrors());
+            this._validator.CascadeMode = CascadeMode.Stop;
+            document.SetValidationResult(this._validator.Validate(document));
+            Assert.IsFalse(document.IsValid());
+            Assert.AreEqual("Number: Document number not provided.", document.GetErrors());
         }
 
         [Test]
         public void DocumentTypeNotProvided()
         {
             Document document = new Document("19899462080");
-            document.IsValid();
-            Assert.IsTrue(document.Type == EDocumentType.NotProvided);
-            Assert.AreEqual("Type: Document type not provided.", document.GetEntityErrors());
+            this._validator.CascadeMode = CascadeMode.Stop;
+            document.SetValidationResult(this._validator.Validate(document));
+            Assert.IsFalse(document.IsValid());
+            Assert.AreEqual(document.Type, EDocumentType.NotProvided);
+            Assert.AreEqual("Type: Document type not provided.", document.GetErrors());
         }
 
         [Test]
@@ -39,7 +46,9 @@ namespace PaymentContext.Tests.ValueObjects
         public void DocumentNumberTypeCPFMustBeValid()
         {
             Document document = new Document("19899462080", EDocumentType.CPF);
-            Assert.IsTrue(document.Type == EDocumentType.CPF);
+            Assert.AreEqual(document.Type, EDocumentType.CPF);
+            this._validator.CascadeMode = CascadeMode.Stop;
+            document.SetValidationResult(this._validator.Validate(document));
             Assert.IsTrue(document.IsValid());
         }
 
@@ -47,10 +56,11 @@ namespace PaymentContext.Tests.ValueObjects
         public void DocumentNumberLenghtTypeCPFMustNotBe11Characters()
         {
             Document document = new Document("123", EDocumentType.CPF);
-            document.CascadeMode = CascadeMode.Stop;
-            Assert.IsTrue(document.Type == EDocumentType.CPF);
+            this._validator.CascadeMode = CascadeMode.Stop;
+            document.SetValidationResult(this._validator.Validate(document));
+            Assert.AreEqual(document.Type, EDocumentType.CPF);
             Assert.IsFalse(document.IsValid());
-            Assert.AreEqual("Number: CPF must have 11 characters.", document.GetEntityErrors());
+            Assert.AreEqual("Number: CPF must have 11 characters.", document.GetErrors());
         }
 
         [Test]
@@ -64,7 +74,9 @@ namespace PaymentContext.Tests.ValueObjects
         public void DocumentTypeCNPJMustByValid()
         {
             Document document = new Document("84131285000190", EDocumentType.CNPJ);
-            Assert.IsTrue(document.Type == EDocumentType.CNPJ);
+            this._validator.CascadeMode = CascadeMode.Stop;
+            document.SetValidationResult(this._validator.Validate(document));
+            Assert.AreEqual(document.Type, EDocumentType.CNPJ);
             Assert.IsTrue(document.IsValid());
         }
     }

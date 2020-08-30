@@ -18,10 +18,5 @@ namespace PaymentContext.Domain.Entities
         public Email Email { get; private set; }
         public string BoletoNumber { get; private set; }
         public string BarCode { get; private set; }
-
-        public override void Validate()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

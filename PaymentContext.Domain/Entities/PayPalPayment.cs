@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using PaymentContext.Domain.Validator;
+﻿using PaymentContext.Domain.Validator;
 using PaymentContext.Domain.ValueObjects;
 using System;
 
@@ -18,10 +17,5 @@ namespace PaymentContext.Domain.Entities
 
         public Email Email { get; private set; }
         public string TransactionCode { get; private set; }
-
-        public override void Validate()
-        {
-            new PayPalPaymentValidator().Validate(this);
-        }
     }
 }

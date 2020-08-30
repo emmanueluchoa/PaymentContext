@@ -32,36 +32,5 @@ namespace PaymentContext.Domain.Entities
 
             this._subscriptions.Add(subscription);
         }
-        public override void Validate()
-        {
-            ValidateName();
-            ValidateEmail();
-            ValidateDocument();
-            ValidateAddress();
-        }
-        void ValidateName()
-        {
-            RuleFor(student => student.Name)
-                .NotNull().WithMessage("Name not provided.")
-                .SetValidator(new Name(string.Empty, string.Empty));
-        }
-        void ValidateEmail()
-        {
-            RuleFor(student => student.Email)
-                .NotNull().WithMessage("Email not provided.")
-                .SetValidator(new Email(string.Empty));
-        }
-        void ValidateDocument()
-        {
-            RuleFor(student => student.Document)
-                .NotNull().WithMessage("Email not provided.")
-                .SetValidator(new Document(string.Empty));
-        }
-        void ValidateAddress()
-        {
-            RuleFor(student => student.Address)
-                .NotNull().WithMessage("Email not provided.")
-                .SetValidator(new Address(string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty));
-        }
     }
 }
